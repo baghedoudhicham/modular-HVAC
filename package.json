@@ -1,0 +1,22 @@
+{
+  "name": "modular-hvac-roomtone",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host 0.0.0.0 --port 3000",
+    "build": "astro build",
+    "preview": "astro preview --host 0.0.0.0 --port 4173",
+    "check": "node --test tests/*.test.mjs && astro check"
+  },
+  "dependencies": {
+    "astro": "^5.16.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.5",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20.10.0"
+  }
+}

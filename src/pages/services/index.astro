@@ -1,0 +1,7 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { servicesPage } from '../lib/templates.js';
+---
+<SiteLayout title="Services" description="Heating, cooling, heat pumps, air quality, maintenance and replacement service guides." activePath="/services/">
+  <Fragment set:html={servicesPage()} />
+</SiteLayout>

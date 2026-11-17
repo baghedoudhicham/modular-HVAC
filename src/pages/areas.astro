@@ -1,0 +1,7 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { areasPage } from '../lib/templates.js';
+---
+<SiteLayout title="Service areas" description="Coverage is unverified in this design demo; learn how to confirm service availability." activePath="/areas/">
+  <Fragment set:html={areasPage()} />
+</SiteLayout>

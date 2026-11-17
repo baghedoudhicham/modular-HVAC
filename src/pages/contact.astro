@@ -1,0 +1,7 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { contactPage } from '../lib/templates.js';
+---
+<SiteLayout title="Request service" description="A non-operational demonstration of accessible HVAC appointment request intake." activePath="/contact/">
+  <Fragment set:html={contactPage()} />
+</SiteLayout>

@@ -1,0 +1,7 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { aboutPage } from '../lib/templates.js';
+---
+<SiteLayout title="Our approach" description="How understandable service and verified trust evidence can make home comfort less stressful." activePath="/about/">
+  <Fragment set:html={aboutPage()} />
+</SiteLayout>

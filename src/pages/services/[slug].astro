@@ -1,0 +1,12 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { services } from '../../lib/content.js';
+import { serviceDetail } from '../../lib/templates.js';
+export function getStaticPaths() {
+  return services.map(service => ({ params: { slug: service.id }, props: { service }}));
+}
+const { service } = Astro.props;
+---
+<SiteLayout title={service.title} description={service.description} activePath="/services/">
+  <Fragment set:html={serviceDetail(service)} />
+</SiteLayout>

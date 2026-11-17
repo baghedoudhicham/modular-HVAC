@@ -1,0 +1,5 @@
+---
+import { serviceOverview } from '../lib/templates.js';
+const { limit, dark = false } = Astro.props;
+---
+<Fragment set:html={serviceOverview({ limit })} />

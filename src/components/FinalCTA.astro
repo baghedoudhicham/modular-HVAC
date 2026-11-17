@@ -1,0 +1,5 @@
+---
+import { cta } from '../lib/visuals.js';
+const { dark = false } = Astro.props;
+---
+<Fragment set:html={cta({ dark })} />

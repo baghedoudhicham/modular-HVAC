@@ -1,0 +1,17 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { services, routes, brand } from '../src/lib/content.js';
+import { houseFigure, selectors, serviceTile, header } from '../src/lib/visuals.js';
+import { serviceDetail } from '../src/lib/templates.js';
+const read=path=>readFile(new URL(path, import.meta.url),'utf8');
+test('six unique services generate six static slugs',()=>{assert.equal(services.length,6);assert.equal(new Set(services.map(x=>x.id)).size,6);});
+test('real contractor facts are absent, not fabricated',()=>{assert.equal(brand.demo,true);assert.equal(brand.phone,null);assert.equal(brand.contactEndpoint,null);assert.equal(brand.schedulingEndpoint,null);assert.deepEqual(brand.serviceAreas,[]);assert.deepEqual(brand.verifiedReviews,[]);});
+test('four authored comfort routes have canonical links',()=>{assert.equal(Object.keys(routes).length,4);for(const r of Object.values(routes))assert.match(r.href,/^\/(?:services|heating-cooling)\//);});
+test('interactive house is labeled as illustrative',()=>{const html=houseFigure();assert.match(html,/NOT LIVE DATA/);assert.match(html,/aria-pressed="true"/);assert.match(html,/<svg/);});
+test('selector exposes keyboard controls and cautions',()=>{const html=selectors();assert.match(html,/role="group"/);assert.match(html,/not a diagnosis/i);});
+test('service detail renders without browser location',()=>{for(const s of services){const html=serviceDetail(s);assert.match(html,new RegExp(s.title));assert.match(html,/What you might notice/);}});
+test('service tiles and navigation use Astro canonical paths',()=>{for(const s of services)assert.match(serviceTile(s),new RegExp(`/services/${s.id}/`));assert.match(header('/'),/aria-current="page"/);});
+test('browser-only scripts never send data',async()=>{const script=await read('../src/scripts/interactions.js');assert.match(script,/Nothing has been sent or saved/);assert.doesNotMatch(script,/fetch\(|sendBeacon\(|XMLHttpRequest\(/);});
+test('Astro static routes and shell exist',async()=>{for(const p of ['index.astro','about.astro','areas.astro','contact.astro','heating-cooling.astro','services/index.astro','services/[slug].astro']){assert.match(await read(`../src/pages/${p}`),/SiteLayout/);}const dynamic=await read('../src/pages/services/[slug].astro');assert.match(dynamic,/getStaticPaths/);assert.match(await read('../src/layouts/SiteLayout.astro'),/robots/);});
+test('no legacy html or service query links in site source',async()=>{for(const p of ['../src/lib/content.js','../src/lib/visuals.js','../src/lib/templates.js']){assert.doesNotMatch(await read(p),/href="\/[a-z-]+\.html/);assert.doesNotMatch(await read(p),/service\.html\?type=/);}});

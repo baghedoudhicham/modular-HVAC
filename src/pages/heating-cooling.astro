@@ -1,0 +1,7 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { heatingCooling } from '../lib/templates.js';
+---
+<SiteLayout title="Heating & cooling" description="Repair, routine maintenance and replacement: clear pathways for every season." activePath="/heating-cooling/">
+  <Fragment set:html={heatingCooling()} />
+</SiteLayout>
